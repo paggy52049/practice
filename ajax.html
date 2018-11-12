@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+        <style>
+            * {
+                box-sizing: border-box;
+                font-family: "Microsoft Jhenghei";
+            }
+
+            .container {
+                display: flex;
+                flex-wrap: wrap;
+                width: 1200px;
+                margin: auto;
+
+            }
+
+            .box {
+                width: calc(25% - 10px);
+                padding: 15px;
+                background-color: #ddd;
+                margin: 5px;
+
+            }
+
+            .loading {
+                position: absolute;
+                width: 30px;
+                height: 30px;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #000;
+                margin: auto;
+                animation: load .3s linear infinite;
+            }
+
+            @keyframes load {
+                from {
+                    transform: rotate(0deg)
+                }
+
+                to {
+                    transform: rotate(360deg)
+                }
+            }
+        </style>
+    </head>
+
+    <body onload="loaded()">
+        <div class="container" id="animal">
+            <div class="loading"></div>
+        </div>
+        <script>
+
+            function loaded() {
+                console.log("loaded");
+                $(".loading").hide();
+            }
+
+            function cbfunc(data) {
+
+                $(document).ready(function () {
+
+
+
+                    data.forEach(function (e) {
+
+                        if (e.animal_sex == "F") {
+                            e.animal_sex = "母的"
+                        } else {
+                            e.animal_sex = "公的"
+                        }
+                        let content = `<div class="box">
+                        <div>${e.animal_place}</div>
+                        <div>${e.animal_kind}</div>
+                        <div>${e.animal_sex}</div>
+                    </div>`;
+
+                        $(".container").append(content);
+                    })
+                })
+            }
+
+        </script>
+        <script src="https://json2jsonp.com/?url=http://data.coa.gov.tw/Service/OpenData/TransService.aspx?UnitId=QcbUEzN6E6DL&callback=cbfunc"></script>
+
+    </body>
+
+</html>
